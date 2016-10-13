@@ -1,24 +1,27 @@
-$(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
 
-# The gps config appropriate for this device
-$(call inherit-product, device/common/gps/gps_us_supl.mk)
+# Inherit from the common Open Source product configuration
+$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
-$(call inherit-product-if-exists, vendor/elephone/vowney/vowney-vendor.mk)
+# Inherit from hardware-specific part of the product configuration
+$(call inherit-product, device/elephone/vowney/device.mk)
 
-DEVICE_PACKAGE_OVERLAYS += device/elephone/vowney/overlay
+# Release name
+PRODUCT_RELEASE_NAME := vowney
 
+EXTENDED_FONT_FOOTPRINT := true
 
-ifeq ($(TARGET_PREBUILT_KERNEL),)
-	LOCAL_KERNEL := device/elephone/vowney/kernel
-else
-	LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
-endif
-
-PRODUCT_COPY_FILES += \
-    $(LOCAL_KERNEL):kernel
-
-$(call inherit-product, build/target/product/full.mk)
-
-PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
-PRODUCT_NAME := full_vowney
 PRODUCT_DEVICE := vowney
+PRODUCT_NAME := full_vowney
+PRODUCT_BRAND := Elephone
+PRODUCT_MODEL := Vowney
+PRODUCT_MANUFACTURER := Elephone
+PRODUCT_RESTRICT_VENDOR_FILES := false
+
+# Boot animation
+TARGET_SCREEN_HEIGHT      := 2560
+TARGET_SCREEN_WIDTH       := 1440
+TARGET_BOOTANIMATION_NAME := 1440
+
+PRODUCT_DEFAULT_LANGUAGE := en
+PRODUCT_DEFAULT_REGION   := US
